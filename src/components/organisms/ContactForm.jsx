@@ -6,11 +6,11 @@ import { contactService } from "@/services/api/contactService";
 import { toast } from "react-toastify";
 
 const ContactForm = ({ contact, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState({
-    name: contact?.name || "",
-    email: contact?.email || "",
-    phone: contact?.phone || "",
-    company: contact?.company || ""
+const [formData, setFormData] = useState({
+    name: contact?.Name || "",
+    email: contact?.email_c || "",
+    phone: contact?.phone_c || "",
+    company: contact?.company_c || ""
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);

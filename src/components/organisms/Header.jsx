@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import QuickActions from "@/components/molecules/QuickActions";
+import { AuthContext } from "../../App";
 import { toast } from "react-toastify";
-
 const Header = ({ title, onMobileMenuToggle }) => {
   const [refreshing, setRefreshing] = useState(false);
+  const { logout } = useContext(AuthContext);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -47,7 +48,7 @@ const Header = ({ title, onMobileMenuToggle }) => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
+<div className="flex items-center space-x-4">
           <div className="hidden md:block">
             <QuickActions
               onContactCreated={(contact) => handleQuickAction("Contact", contact)}
@@ -69,7 +70,17 @@ const Header = ({ title, onMobileMenuToggle }) => {
             >
               <ApperIcon name="RefreshCw" className="w-4 h-4 mr-2" />
             </motion.div>
-            Refresh
+Refresh
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={logout}
+            className="hidden sm:flex"
+          >
+            <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+            Logout
           </Button>
         </div>
       </div>

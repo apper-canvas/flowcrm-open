@@ -8,13 +8,13 @@ import { contactService } from "@/services/api/contactService";
 import { toast } from "react-toastify";
 
 const DealForm = ({ deal, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState({
-    title: deal?.title || "",
-    value: deal?.value || "",
-    stage: deal?.stage || "Lead",
-    probability: deal?.probability || 25,
-    expectedCloseDate: deal?.expectedCloseDate || "",
-    contactIds: deal?.contactIds || []
+const [formData, setFormData] = useState({
+    title: deal?.title_c || "",
+    value: deal?.value_c || "",
+    stage: deal?.stage_c || "Lead",
+    probability: deal?.probability_c || 25,
+    expectedCloseDate: deal?.expected_close_date_c || "",
+    contactIds: deal?.contact_ids_c ? deal.contact_ids_c.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id)) : []
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -169,8 +169,8 @@ const DealForm = ({ deal, onSubmit, onCancel }) => {
           className="min-h-[100px]"
         >
           {contacts.map(contact => (
-            <option key={contact.Id} value={contact.Id}>
-              {contact.name} - {contact.company}
+<option key={contact.Id} value={contact.Id}>
+              {contact.Name} - {contact.company_c}
             </option>
           ))}
         </Select>

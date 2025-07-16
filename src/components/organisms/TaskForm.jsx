@@ -9,13 +9,13 @@ import { dealService } from "@/services/api/dealService";
 import { toast } from "react-toastify";
 
 const TaskForm = ({ task, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState({
-    title: task?.title || "",
-    description: task?.description || "",
-    dueDate: task?.dueDate || "",
-    priority: task?.priority || "medium",
-    contactId: task?.contactId || "",
-    dealId: task?.dealId || ""
+const [formData, setFormData] = useState({
+    title: task?.title_c || "",
+    description: task?.description_c || "",
+    dueDate: task?.due_date_c || "",
+    priority: task?.priority_c || "medium",
+    contactId: task?.contact_id_c || "",
+    dealId: task?.deal_id_c || ""
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,9 +76,9 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
     try {
       const taskData = {
         ...formData,
-        contactId: formData.contactId ? parseInt(formData.contactId) : null,
+contactId: formData.contactId ? parseInt(formData.contactId) : null,
         dealId: formData.dealId ? parseInt(formData.dealId) : null,
-        completed: task?.completed || false
+        completed: task?.completed_c || false
       };
       
       let result;
@@ -169,7 +169,7 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
           <option value="">Select a contact (optional)</option>
           {contacts.map(contact => (
             <option key={contact.Id} value={contact.Id}>
-              {contact.name} - {contact.company}
+{contact.Name} - {contact.company_c}
             </option>
           ))}
         </Select>
@@ -185,7 +185,7 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
           <option value="">Select a deal (optional)</option>
           {deals.map(deal => (
             <option key={deal.Id} value={deal.Id}>
-              {deal.title} - ${deal.value.toLocaleString()}
+{deal.title_c} - ${deal.value_c?.toLocaleString()}
             </option>
           ))}
         </Select>

@@ -27,8 +27,8 @@ const RecentActivity = () => {
       ]);
       
       // Sort activities by date (newest first)
-      const sortedActivities = activitiesData.sort((a, b) => 
-        new Date(b.createdAt) - new Date(a.createdAt)
+const sortedActivities = activitiesData.sort((a, b) => 
+        new Date(b.created_at_c || b.CreatedOn) - new Date(a.created_at_c || a.CreatedOn)
       ).slice(0, 10); // Show only last 10 activities
       
       setActivities(sortedActivities);
@@ -42,17 +42,17 @@ const RecentActivity = () => {
   };
 
   const getEntityName = (entityId, entityType) => {
-    if (entityType === "contact") {
+if (entityType === "contact") {
       const contact = contacts.find(c => c.Id === entityId);
-      return contact ? contact.name : "Unknown Contact";
+      return contact ? contact.Name : "Unknown Contact";
     } else if (entityType === "deal") {
-      const deal = deals.find(d => d.Id === entityId);
-      return deal ? deal.title : "Unknown Deal";
+const deal = deals.find(d => d.Id === entityId);
+      return deal ? deal.title_c : "Unknown Deal";
     }
     return "Unknown";
   };
 
-  const getActivityIcon = (type) => {
+const getActivityIcon = (type) => {
     const iconMap = {
       email: "Mail",
       call: "Phone",
@@ -134,8 +134,8 @@ const RecentActivity = () => {
             >
               <div className="flex-shrink-0">
                 <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
-                  <ApperIcon 
-                    name={getActivityIcon(activity.type)} 
+<ApperIcon 
+                    name={getActivityIcon(activity.type_c)}
                     className="w-4 h-4 text-white" 
                   />
                 </div>
@@ -143,21 +143,21 @@ const RecentActivity = () => {
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-center space-x-2 mb-1">
-                  <Badge variant={getActivityColor(activity.type)} className="text-xs">
-                    {activity.type}
+<Badge variant={getActivityColor(activity.type_c)} className="text-xs">
+                    {activity.type_c}
                   </Badge>
-                  <span className="text-sm font-medium text-gray-900">
-                    {getEntityName(activity.entityId, activity.entityType)}
+<span className="text-sm font-medium text-gray-900">
+                    {getEntityName(activity.entity_id_c, activity.entity_type_c)}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {activity.description}
+<p className="text-sm text-gray-600 leading-relaxed">
+                  {activity.description_c}
                 </p>
               </div>
               
               <div className="flex-shrink-0">
-                <span className="text-xs text-gray-500">
-                  {formatTimeAgo(activity.createdAt)}
+<span className="text-xs text-gray-500">
+                  {formatTimeAgo(activity.created_at_c || activity.CreatedOn)}
                 </span>
               </div>
             </motion.div>

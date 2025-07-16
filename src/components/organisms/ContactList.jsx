@@ -28,10 +28,10 @@ const ContactList = () => {
 
   useEffect(() => {
     if (searchTerm) {
-      const filtered = contacts.filter(contact =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.company.toLowerCase().includes(searchTerm.toLowerCase())
+const filtered = contacts.filter(contact =>
+        contact.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.email_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.company_c?.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredContacts(filtered);
     } else {
@@ -148,8 +148,8 @@ const ContactList = () => {
                       <ApperIcon name="User" className="w-6 h-6 text-white" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900">{contact.name}</h3>
-                      <p className="text-sm text-gray-600">{contact.company}</p>
+<h3 className="text-lg font-semibold text-gray-900">{contact.Name}</h3>
+                      <p className="text-sm text-gray-600">{contact.company_c}</p>
                     </div>
                   </div>
                   <div className="flex space-x-2">
@@ -172,13 +172,13 @@ const ContactList = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <div className="flex items-center text-sm text-gray-600">
+<div className="flex items-center text-sm text-gray-600">
                     <ApperIcon name="Mail" className="w-4 h-4 mr-2" />
-                    {contact.email}
+                    {contact.email_c}
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
-                    {contact.phone}
+                    {contact.phone_c}
                   </div>
                 </div>
 
@@ -187,7 +187,7 @@ const ContactList = () => {
                     variant="outline"
                     size="sm"
                     className="flex-1"
-                    onClick={() => window.location.href = `mailto:${contact.email}`}
+onClick={() => window.location.href = `mailto:${contact.email_c}`}
                   >
                     <ApperIcon name="Mail" className="w-4 h-4 mr-2" />
                     Email
@@ -196,7 +196,7 @@ const ContactList = () => {
                     variant="outline"
                     size="sm"
                     className="flex-1"
-                    onClick={() => window.location.href = `tel:${contact.phone}`}
+                    onClick={() => window.location.href = `tel:${contact.phone_c}`}
                   >
                     <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
                     Call
@@ -232,8 +232,8 @@ const ContactList = () => {
             <ApperIcon name="AlertTriangle" className="w-6 h-6 text-red-600" />
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Delete Contact</h3>
-          <p className="text-sm text-gray-500 mb-6">
-            Are you sure you want to delete {selectedContact?.name}? This action cannot be undone.
+<p className="text-sm text-gray-500 mb-6">
+            Are you sure you want to delete {selectedContact?.Name}? This action cannot be undone.
           </p>
           <div className="flex justify-center space-x-3">
             <Button

@@ -30,12 +30,12 @@ const DashboardStats = () => {
         taskService.getAll()
       ]);
 
-      const totalDeals = deals.length;
-      const totalValue = deals.reduce((sum, deal) => sum + deal.value, 0);
-      const closedDeals = deals.filter(deal => deal.stage === "Closed").length;
+const totalDeals = deals.length;
+      const totalValue = deals.reduce((sum, deal) => sum + (deal.value_c || 0), 0);
+      const closedDeals = deals.filter(deal => deal.stage_c === "Closed").length;
       const conversionRate = totalDeals > 0 ? (closedDeals / totalDeals) * 100 : 0;
-      const pendingTasks = tasks.filter(task => !task.completed).length;
-      const completedTasks = tasks.filter(task => task.completed).length;
+const pendingTasks = tasks.filter(task => !task.completed_c).length;
+      const completedTasks = tasks.filter(task => task.completed_c).length;
 
       setStats({
         totalDeals,

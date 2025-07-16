@@ -39,13 +39,13 @@ const TaskList = () => {
   useEffect(() => {
     let filtered = tasks;
     
-    if (filter === "completed") {
-      filtered = tasks.filter(task => task.completed);
+if (filter === "completed") {
+      filtered = tasks.filter(task => task.completed_c);
     } else if (filter === "pending") {
-      filtered = tasks.filter(task => !task.completed);
+filtered = tasks.filter(task => !task.completed_c);
     } else if (filter === "overdue") {
       filtered = tasks.filter(task => 
-        !task.completed && new Date(task.dueDate) < new Date()
+        !task.completed_c && new Date(task.due_date_c) < new Date()
       );
     }
     
@@ -72,13 +72,13 @@ const TaskList = () => {
   };
 
   const getContactName = (contactId) => {
-    const contact = contacts.find(c => c.Id === contactId);
-    return contact ? contact.name : "Unknown";
+const contact = contacts.find(c => c.Id === contactId);
+    return contact ? contact.Name : "Unknown";
   };
 
   const getDealTitle = (dealId) => {
-    const deal = deals.find(d => d.Id === dealId);
-    return deal ? deal.title : "Unknown";
+const deal = deals.find(d => d.Id === dealId);
+    return deal ? deal.title_c : "Unknown";
   };
 
   const handleToggleComplete = async (task) => {
@@ -130,8 +130,8 @@ const TaskList = () => {
     }
   };
 
-  const isOverdue = (task) => {
-    return !task.completed && new Date(task.dueDate) < new Date();
+const isOverdue = (task) => {
+    return !task.completed_c && new Date(task.due_date_c) < new Date();
   };
 
   if (loading) return <Loading type="table" />;
@@ -170,28 +170,28 @@ const TaskList = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className={`p-6 ${task.completed ? 'bg-gray-50' : ''}`}>
+<Card className={`p-6 ${task.completed_c ? 'bg-gray-50' : ''}`}>
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-4">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => handleToggleComplete(task)}
-                      className={`p-2 ${task.completed ? 'text-green-600' : 'text-gray-400'}`}
+className={`p-2 ${task.completed_c ? 'text-green-600' : 'text-gray-400'}`}
                     >
-                      <ApperIcon 
-                        name={task.completed ? "CheckCircle" : "Circle"} 
-                        className="w-5 h-5" 
+<ApperIcon 
+                        name={task.completed_c ? "CheckCircle" : "Circle"} 
+                        className="w-5 h-5"
                       />
                     </Button>
                     
                     <div className="flex-1">
                       <div className="flex items-center space-x-3 mb-2">
-                        <h3 className={`text-lg font-semibold ${task.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
-                          {task.title}
+<h3 className={`text-lg font-semibold ${task.completed_c ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+                          {task.title_c}
                         </h3>
-                        <Badge variant={priorityColors[task.priority]}>
-                          {task.priority}
+<Badge variant={priorityColors[task.priority_c]}>
+                          {task.priority_c}
                         </Badge>
                         {isOverdue(task) && (
                           <Badge variant="danger">
@@ -200,29 +200,29 @@ const TaskList = () => {
                         )}
                       </div>
                       
-                      {task.description && (
-                        <p className={`text-sm mb-3 ${task.completed ? 'text-gray-400' : 'text-gray-600'}`}>
-                          {task.description}
+{task.description_c && (
+                        <p className={`text-sm mb-3 ${task.completed_c ? 'text-gray-400' : 'text-gray-600'}`}>
+                          {task.description_c}
                         </p>
                       )}
                       
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
                         <div className="flex items-center">
-                          <ApperIcon name="Calendar" className="w-4 h-4 mr-1" />
-                          Due: {new Date(task.dueDate).toLocaleDateString()}
+<ApperIcon name="Calendar" className="w-4 h-4 mr-1" />
+                          Due: {new Date(task.due_date_c).toLocaleDateString()}
                         </div>
                         
-                        {task.contactId && (
+{task.contact_id_c && (
                           <div className="flex items-center">
                             <ApperIcon name="User" className="w-4 h-4 mr-1" />
-                            {getContactName(task.contactId)}
+                            {getContactName(task.contact_id_c)}
                           </div>
                         )}
                         
-                        {task.dealId && (
+{task.deal_id_c && (
                           <div className="flex items-center">
                             <ApperIcon name="TrendingUp" className="w-4 h-4 mr-1" />
-                            {getDealTitle(task.dealId)}
+                            {getDealTitle(task.deal_id_c)}
                           </div>
                         )}
                       </div>
@@ -277,8 +277,8 @@ const TaskList = () => {
             <ApperIcon name="AlertTriangle" className="w-6 h-6 text-red-600" />
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Delete Task</h3>
-          <p className="text-sm text-gray-500 mb-6">
-            Are you sure you want to delete "{selectedTask?.title}"? This action cannot be undone.
+<p className="text-sm text-gray-500 mb-6">
+            Are you sure you want to delete "{selectedTask?.title_c}"? This action cannot be undone.
           </p>
           <div className="flex justify-center space-x-3">
             <Button

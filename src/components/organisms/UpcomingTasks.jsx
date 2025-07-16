@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
+import Tasks from "@/components/pages/Tasks";
 import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
 import { taskService } from "@/services/api/taskService";
 import { contactService } from "@/services/api/contactService";
-import { toast } from "react-toastify";
 
 const UpcomingTasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -25,10 +26,10 @@ const UpcomingTasks = () => {
         contactService.getAll()
       ]);
       
-      // Filter and sort upcoming tasks
+// Filter and sort upcoming tasks
       const upcomingTasks = tasksData
-        .filter(task => !task.completed)
-        .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+        .filter(task => !task.completed_c)
+        .sort((a, b) => new Date(a.due_date_c) - new Date(b.due_date_c))
         .slice(0, 8);
       
       setTasks(upcomingTasks);
@@ -40,9 +41,9 @@ const UpcomingTasks = () => {
     }
   };
 
-  const getContactName = (contactId) => {
+const getContactName = (contactId) => {
     const contact = contacts.find(c => c.Id === contactId);
-    return contact ? contact.name : null;
+    return contact ? contact.Name : null;
   };
 
   const isOverdue = (dueDate) => {
@@ -119,10 +120,10 @@ const UpcomingTasks = () => {
               key={task.Id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+transition={{ delay: index * 0.1 }}
               className={`flex items-center space-x-3 p-3 rounded-lg border transition-all duration-200 hover:shadow-sm ${
-                isOverdue(task.dueDate) ? 'border-red-200 bg-red-50' :
-                isDueToday(task.dueDate) ? 'border-yellow-200 bg-yellow-50' :
+                isOverdue(task.due_date_c) ? 'border-red-200 bg-red-50' :
+                isDueToday(task.due_date_c) ? 'border-yellow-200 bg-yellow-50' :
                 'border-gray-200 bg-white'
               }`}
             >
@@ -136,28 +137,27 @@ const UpcomingTasks = () => {
               </Button>
               
               <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2 mb-1">
+<div className="flex items-center space-x-2 mb-1">
                   <h4 className="text-sm font-medium text-gray-900 truncate">
-                    {task.title}
+                    {task.title_c}
                   </h4>
-                  <Badge variant={getPriorityColor(task.priority)} className="text-xs">
-                    {task.priority}
+                  <Badge variant={getPriorityColor(task.priority_c)} className="text-xs">
+                    {task.priority_c}
                   </Badge>
                 </div>
                 
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
-                  <ApperIcon name="Calendar" className="w-3 h-3" />
+<ApperIcon name="Calendar" className="w-3 h-3" />
                   <span>
-                    {isOverdue(task.dueDate) ? "Overdue" :
-                     isDueToday(task.dueDate) ? "Due today" :
-                     new Date(task.dueDate).toLocaleDateString()}
+                    {isOverdue(task.due_date_c) ? "Overdue" :
+                     isDueToday(task.due_date_c) ? "Due today" :
+                     new Date(task.due_date_c).toLocaleDateString()}
                   </span>
-                  
-                  {task.contactId && (
+                  {task.contact_id_c && (
                     <>
                       <span>•</span>
                       <ApperIcon name="User" className="w-3 h-3" />
-                      <span>{getContactName(task.contactId)}</span>
+                      <span>{getContactName(task.contact_id_c)}</span>
                     </>
                   )}
                 </div>

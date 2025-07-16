@@ -46,14 +46,14 @@ const DealPipeline = () => {
     }
   };
 
-  const getDealsByStage = (stage) => {
-    return deals.filter(deal => deal.stage === stage);
+const getDealsByStage = (stage) => {
+    return deals.filter(deal => deal.stage_c === stage);
   };
 
   const getContactNames = (contactIds) => {
-    return contactIds.map(id => {
+return contactIds.map(id => {
       const contact = contacts.find(c => c.Id === id);
-      return contact ? contact.name : "Unknown";
+      return contact ? contact.Name : "Unknown";
     }).join(", ");
   };
 
@@ -70,16 +70,16 @@ const DealPipeline = () => {
   const handleDrop = async (e, newStage) => {
     e.preventDefault();
     
-    if (!draggedDeal || draggedDeal.stage === newStage) {
+if (!draggedDeal || draggedDeal.stage_c === newStage) {
       setDraggedDeal(null);
       return;
     }
 
     try {
       const updatedDeal = await dealService.updateStage(draggedDeal.Id, newStage);
-      setDeals(prev => 
+setDeals(prev => 
         prev.map(deal => 
-          deal.Id === draggedDeal.Id ? { ...deal, stage: newStage } : deal
+          deal.Id === draggedDeal.Id ? { ...deal, stage_c: newStage } : deal
         )
       );
       toast.success(`Deal moved to ${newStage} stage`);
@@ -189,8 +189,8 @@ const DealPipeline = () => {
                       onDragStart={(e) => handleDragStart(e, deal)}
                     >
                       <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-gray-900 text-sm leading-tight">
-                          {deal.title}
+<h4 className="font-medium text-gray-900 text-sm leading-tight">
+                          {deal.title_c}
                         </h4>
                         <div className="flex space-x-1">
                           <Button
@@ -212,21 +212,21 @@ const DealPipeline = () => {
                         </div>
                       </div>
 
-                      <div className="text-lg font-bold text-primary-600 mb-2">
-                        ${deal.value.toLocaleString()}
+<div className="text-lg font-bold text-primary-600 mb-2">
+                        ${deal.value_c?.toLocaleString()}
                       </div>
 
-                      <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
-                        <Badge variant={getProbabilityColor(deal.probability)}>
-                          {deal.probability}%
+<div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+                        <Badge variant={getProbabilityColor(deal.probability_c)}>
+                          {deal.probability_c}%
                         </Badge>
-                        <span>{new Date(deal.expectedCloseDate).toLocaleDateString()}</span>
+                        <span>{new Date(deal.expected_close_date_c).toLocaleDateString()}</span>
                       </div>
 
-                      {deal.contactIds.length > 0 && (
+{deal.contact_ids_c && deal.contact_ids_c.split(',').filter(id => id.trim()).length > 0 && (
                         <div className="flex items-center text-xs text-gray-600">
                           <ApperIcon name="User" className="w-3 h-3 mr-1" />
-                          <span className="truncate">{getContactNames(deal.contactIds)}</span>
+                          <span className="truncate">{getContactNames(deal.contact_ids_c.split(',').map(id => parseInt(id.trim())))}</span>
                         </div>
                       )}
                     </Card>
@@ -262,8 +262,8 @@ const DealPipeline = () => {
             <ApperIcon name="AlertTriangle" className="w-6 h-6 text-red-600" />
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Delete Deal</h3>
-          <p className="text-sm text-gray-500 mb-6">
-            Are you sure you want to delete "{selectedDeal?.title}"? This action cannot be undone.
+<p className="text-sm text-gray-500 mb-6">
+            Are you sure you want to delete "{selectedDeal?.title_c}"? This action cannot be undone.
           </p>
           <div className="flex justify-center space-x-3">
             <Button
