@@ -1,0 +1,56 @@
+[
+  {
+    "Id": 1,
+    "name": "John Smith",
+    "email": "john.smith@techcorp.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "TechCorp Solutions",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-20T14:15:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Sarah Johnson",
+    "email": "sarah.johnson@innovate.com",
+    "phone": "+1 (555) 234-5678",
+    "company": "Innovate Inc",
+    "createdAt": "2024-01-16T09:45:00Z",
+    "updatedAt": "2024-01-22T11:30:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "Michael Chen",
+    "email": "m.chen@digitalflow.com",
+    "phone": "+1 (555) 345-6789",
+    "company": "DigitalFlow Systems",
+    "createdAt": "2024-01-18T13:20:00Z",
+    "updatedAt": "2024-01-25T16:45:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "Emily Rodriguez",
+    "email": "emily.r@cloudventures.com",
+    "phone": "+1 (555) 456-7890",
+    "company": "CloudVentures",
+    "createdAt": "2024-01-19T11:10:00Z",
+    "updatedAt": "2024-01-24T09:20:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "David Wilson",
+    "email": "david.wilson@nextgen.com",
+    "phone": "+1 (555) 567-8901",
+    "company": "NextGen Technologies",
+    "createdAt": "2024-01-20T15:30:00Z",
+    "updatedAt": "2024-01-26T12:00:00Z"
+  },
+  {
+    "Id": 6,
+    "name": "Lisa Thompson",
+    "email": "lisa.thompson@futuresoft.com",
+    "phone": "+1 (555) 678-9012",
+    "company": "FutureSoft",
+    "createdAt": "2024-01-21T08:45:00Z",
+    "updatedAt": "2024-01-27T14:30:00Z"
+  }
+]

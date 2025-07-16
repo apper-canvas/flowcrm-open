@@ -1,0 +1,68 @@
+[
+  {
+    "Id": 1,
+    "title": "Follow up on proposal",
+    "description": "Call John Smith to discuss the enterprise software proposal and address any concerns",
+    "dueDate": "2024-02-01",
+    "priority": "high",
+    "completed": false,
+    "contactId": 1,
+    "dealId": 1,
+    "createdAt": "2024-01-25T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "title": "Prepare contract documents",
+    "description": "Draft and review contract documents for the cloud migration project",
+    "dueDate": "2024-02-03",
+    "priority": "medium",
+    "completed": false,
+    "contactId": 3,
+    "dealId": 2,
+    "createdAt": "2024-01-26T09:45:00Z"
+  },
+  {
+    "Id": 3,
+    "title": "Schedule demo presentation",
+    "description": "Coordinate with Emily Rodriguez for a product demonstration",
+    "dueDate": "2024-01-30",
+    "priority": "high",
+    "completed": true,
+    "contactId": 4,
+    "dealId": 3,
+    "createdAt": "2024-01-24T13:20:00Z"
+  },
+  {
+    "Id": 4,
+    "title": "Send pricing information",
+    "description": "Email detailed pricing breakdown to Lisa Thompson",
+    "dueDate": "2024-02-02",
+    "priority": "medium",
+    "completed": false,
+    "contactId": 6,
+    "dealId": 4,
+    "createdAt": "2024-01-27T11:10:00Z"
+  },
+  {
+    "Id": 5,
+    "title": "Technical requirements review",
+    "description": "Review technical specifications with David Wilson's team",
+    "dueDate": "2024-02-05",
+    "priority": "low",
+    "completed": false,
+    "contactId": 5,
+    "dealId": 5,
+    "createdAt": "2024-01-28T15:30:00Z"
+  },
+  {
+    "Id": 6,
+    "title": "Client onboarding call",
+    "description": "Welcome call with Sarah Johnson for the mobile app project",
+    "dueDate": "2024-01-29",
+    "priority": "high",
+    "completed": true,
+    "contactId": 2,
+    "dealId": 6,
+    "createdAt": "2024-01-26T08:45:00Z"
+  }
+]

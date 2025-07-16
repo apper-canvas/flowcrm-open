@@ -1,0 +1,66 @@
+[
+  {
+    "Id": 1,
+    "type": "email",
+    "description": "Sent proposal document to John Smith",
+    "entityId": 1,
+    "entityType": "contact",
+    "createdAt": "2024-01-25T14:30:00Z"
+  },
+  {
+    "Id": 2,
+    "type": "call",
+    "description": "Discovery call with Sarah Johnson - discussed requirements",
+    "entityId": 2,
+    "entityType": "contact",
+    "createdAt": "2024-01-24T10:15:00Z"
+  },
+  {
+    "Id": 3,
+    "type": "meeting",
+    "description": "In-person meeting with Michael Chen's team",
+    "entityId": 3,
+    "entityType": "contact",
+    "createdAt": "2024-01-23T16:45:00Z"
+  },
+  {
+    "Id": 4,
+    "type": "task",
+    "description": "Completed demo presentation for Emily Rodriguez",
+    "entityId": 4,
+    "entityType": "contact",
+    "createdAt": "2024-01-22T11:30:00Z"
+  },
+  {
+    "Id": 5,
+    "type": "note",
+    "description": "David Wilson expressed interest in additional security features",
+    "entityId": 5,
+    "entityType": "contact",
+    "createdAt": "2024-01-21T09:20:00Z"
+  },
+  {
+    "Id": 6,
+    "type": "email",
+    "description": "Sent welcome email to Lisa Thompson",
+    "entityId": 6,
+    "entityType": "contact",
+    "createdAt": "2024-01-20T13:45:00Z"
+  },
+  {
+    "Id": 7,
+    "type": "deal",
+    "description": "Deal moved to Negotiation stage",
+    "entityId": 3,
+    "entityType": "deal",
+    "createdAt": "2024-01-26T15:00:00Z"
+  },
+  {
+    "Id": 8,
+    "type": "deal",
+    "description": "Deal closed successfully",
+    "entityId": 6,
+    "entityType": "deal",
+    "createdAt": "2024-01-25T17:30:00Z"
+  }
+]
