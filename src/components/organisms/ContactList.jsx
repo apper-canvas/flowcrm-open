@@ -6,12 +6,12 @@ import Card from "@/components/atoms/Card";
 import SearchBar from "@/components/molecules/SearchBar";
 import Modal from "@/components/molecules/Modal";
 import ContactForm from "@/components/organisms/ContactForm";
+import ImportExportModal from "@/components/organisms/ImportExportModal";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
 import { contactService } from "@/services/api/contactService";
 import { toast } from "react-toastify";
-
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
@@ -20,8 +20,8 @@ const ContactList = () => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isImportExportModalOpen, setIsImportExportModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
   useEffect(() => {
     loadContacts();
   }, []);
@@ -85,6 +85,20 @@ const ContactList = () => {
       setIsDeleteModalOpen(false);
       setSelectedContact(null);
     }
+};
+
+  const handleImport = async (contactsToImport) => {
+    try {
+      const importedContacts = [];
+      for (const contactData of contactsToImport) {
+        const imported = await contactService.create(contactData);
+        importedContacts.push(imported);
+      }
+      setContacts(prev => [...prev, ...importedContacts]);
+      return importedContacts;
+    } catch (error) {
+      throw new Error(`Failed to import contacts: ${error.message}`);
+    }
   };
 
   if (loading) return <Loading type="table" />;
@@ -98,6 +112,15 @@ const ContactList = () => {
             onSearch={setSearchTerm}
             placeholder="Search contacts..."
           />
+        </div>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => setIsImportExportModalOpen(true)}
+          >
+            <ApperIcon name="Upload" className="w-4 h-4 mr-2" />
+            Import/Export
+          </Button>
         </div>
       </div>
 
@@ -227,7 +250,14 @@ const ContactList = () => {
             </Button>
           </div>
         </div>
-      </Modal>
+</Modal>
+
+      <ImportExportModal
+        isOpen={isImportExportModalOpen}
+        onClose={() => setIsImportExportModalOpen(false)}
+        onImport={handleImport}
+        contacts={contacts}
+      />
     </div>
   );
 };

@@ -51,7 +51,30 @@ export const contactService = {
     if (index === -1) {
       throw new Error("Contact not found");
     }
-    contacts.splice(index, 1);
+contacts.splice(index, 1);
     return true;
+  },
+
+  async importFromCSV(contactsData) {
+    await delay(500);
+    const importedContacts = [];
+    
+    for (const contactData of contactsData) {
+      const newContact = {
+        ...contactData,
+        Id: Math.max(...contacts.map(c => c.Id)) + 1,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      contacts.push(newContact);
+      importedContacts.push({ ...newContact });
+    }
+    
+    return importedContacts;
+  },
+
+  async exportToCSV() {
+    await delay(200);
+    return [...contacts];
   }
 };
