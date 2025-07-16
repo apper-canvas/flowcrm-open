@@ -74,18 +74,27 @@ export const activityService = {
     }
   },
 
-  async create(activityData) {
+async create(activityData) {
     try {
+      const recordData = {
+        Name: activityData.description,
+        type_c: activityData.type,
+        description_c: activityData.description,
+        entity_id_c: activityData.entityId || null,
+        entity_type_c: activityData.entityType,
+        Tags: activityData.tags || "",
+        created_at_c: new Date().toISOString()
+      };
+
+      // Add email-specific fields if this is an email activity
+      if (activityData.type === "email") {
+        recordData.subject_c = activityData.subject_c || "";
+        recordData.body_c = activityData.body_c || "";
+        recordData.attachment_c = activityData.attachment_c || "";
+      }
+
       const params = {
-        records: [{
-          Name: activityData.description,
-          type_c: activityData.type,
-          description_c: activityData.description,
-          entity_id_c: activityData.entityId || null,
-          entity_type_c: activityData.entityType,
-          Tags: activityData.tags || "",
-          created_at_c: new Date().toISOString()
-        }]
+        records: [recordData]
       };
       
       const response = await apperClient.createRecord(tableName, params);

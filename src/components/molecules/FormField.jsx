@@ -1,6 +1,7 @@
-import Label from "@/components/atoms/Label";
-import Input from "@/components/atoms/Input";
+import React from "react";
 import Select from "@/components/atoms/Select";
+import Input from "@/components/atoms/Input";
+import Label from "@/components/atoms/Label";
 
 const FormField = ({ 
   label, 
@@ -12,21 +13,14 @@ const FormField = ({
 }) => {
   return (
     <div className="space-y-1">
-      <Label>
+    <Label>
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
-      </Label>
-      {children ? (
-        children
-      ) : type === "select" ? (
-        <Select error={error} {...props} />
-      ) : (
-        <Input type={type} error={error} {...props} />
-      )}
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
-      )}
-    </div>
+        {required && <span className="text-red-500 ml-1">*</span>})
+              {children ? children : type === "select" ? <Select error={error} {...props} /> : type === "textarea" ? <textarea
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent ${error ? "border-red-500" : "border-gray-300"}`}
+            {...props} /> : <Input type={type} error={error} {...props} />}
+        {error && <p className="text-sm text-red-600">{error}</p>}
+    </Label></div>
   );
 };
 

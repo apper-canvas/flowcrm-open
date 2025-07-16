@@ -10,17 +10,20 @@ import ImportExportModal from "@/components/organisms/ImportExportModal";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
+import FormField from "@/components/molecules/FormField";
 import { contactService } from "@/services/api/contactService";
+import { activityService } from "@/services/api/activityService";
 import { toast } from "react-toastify";
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedContact, setSelectedContact] = useState(null);
+const [selectedContact, setSelectedContact] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isImportExportModalOpen, setIsImportExportModalOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     loadContacts();
@@ -83,11 +86,16 @@ const filtered = contacts.filter(contact =>
       toast.error("Failed to delete contact. Please try again.");
     } finally {
       setIsDeleteModalOpen(false);
-      setSelectedContact(null);
-    }
+setSelectedContact(null);
+  }
 };
 
-  const handleImport = async (contactsToImport) => {
+const handleLogEmail = (contact) => {
+  setSelectedContact(contact);
+  setIsEmailModalOpen(true);
+};
+
+const handleImport = async (contactsToImport) => {
     try {
       const importedContacts = [];
       for (const contactData of contactsToImport) {
@@ -191,7 +199,7 @@ onClick={() => window.location.href = `mailto:${contact.email_c}`}
                   >
                     <ApperIcon name="Mail" className="w-4 h-4 mr-2" />
                     Email
-                  </Button>
+</Button>
                   <Button
                     variant="outline"
                     size="sm"
@@ -200,6 +208,18 @@ onClick={() => window.location.href = `mailto:${contact.email_c}`}
                   >
                     <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
                     Call
+                  </Button>
+                </div>
+                
+                <div className="mt-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => handleLogEmail(contact)}
+                  >
+                    <ApperIcon name="Mail" className="w-4 h-4 mr-2" />
+                    Log Email
                   </Button>
                 </div>
               </Card>
@@ -255,10 +275,147 @@ onClick={() => window.location.href = `mailto:${contact.email_c}`}
       <ImportExportModal
         isOpen={isImportExportModalOpen}
         onClose={() => setIsImportExportModalOpen(false)}
-        onImport={handleImport}
+onImport={handleImport}
         contacts={contacts}
       />
+
+      <EmailLogModal
+        isOpen={isEmailModalOpen}
+        onClose={() => setIsEmailModalOpen(false)}
+        contact={selectedContact}
+        onSubmit={async (emailData) => {
+          try {
+            await activityService.create({
+              type: "email",
+              description: `Email: ${emailData.subject}`,
+              subject_c: emailData.subject,
+              body_c: emailData.body,
+              attachment_c: emailData.attachment,
+              entityId: selectedContact.Id,
+              entityType: "contact"
+            });
+            
+            toast.success("Email logged successfully!");
+            setIsEmailModalOpen(false);
+            setSelectedContact(null);
+          } catch (error) {
+            toast.error("Failed to log email. Please try again.");
+          }
+        }}
+      />
     </div>
+  );
+};
+
+const EmailLogModal = ({ isOpen, onClose, contact, onSubmit }) => {
+  const [formData, setFormData] = useState({
+    subject: "",
+    body: "",
+    attachment: ""
+  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.subject?.trim()) {
+      newErrors.subject = "Subject is required";
+    }
+    
+    if (!formData.body?.trim()) {
+      newErrors.body = "Email body is required";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setLoading(true);
+    try {
+      await onSubmit(formData);
+      setFormData({ subject: "", body: "", attachment: "" });
+      setErrors({});
+    } catch (error) {
+      console.error("Error logging email:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClose = () => {
+    setFormData({ subject: "", body: "", attachment: "" });
+    setErrors({});
+    onClose();
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title={`Log Email - ${contact?.Name}`}
+      size="lg"
+    >
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <FormField
+          label="Subject"
+          value={formData.subject}
+          onChange={(e) => handleChange("subject", e.target.value)}
+          placeholder="Enter email subject"
+          error={errors.subject}
+          required
+        />
+        
+        <FormField
+          label="Body"
+          type="textarea"
+          value={formData.body}
+          onChange={(e) => handleChange("body", e.target.value)}
+          placeholder="Enter email body content"
+          rows={6}
+          error={errors.body}
+          required
+        />
+        
+        <FormField
+          label="Attachment"
+          value={formData.attachment}
+          onChange={(e) => handleChange("attachment", e.target.value)}
+          placeholder="Enter attachment names or descriptions (optional)"
+          error={errors.attachment}
+        />
+        
+        <div className="flex justify-end space-x-3 pt-4">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={handleClose}
+            disabled={loading}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={loading}
+          >
+            {loading ? "Logging..." : "Log Email"}
+          </Button>
+        </div>
+      </form>
+    </Modal>
   );
 };
 
