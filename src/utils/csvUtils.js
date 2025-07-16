@@ -114,8 +114,8 @@ export const csvUtils = {
       errors.push(`Row ${rowIndex + 1}: Invalid email format`);
     }
     
-    if (contact.phone && contact.phone.trim() !== '' && 
-        !/^[\+]?[\d\s\-\(\)]+$/.test(contact.phone)) {
+if (contact.phone && contact.phone.trim() !== '' && 
+        !/^[+]?[\d\s\-()]+$/.test(contact.phone)) {
       errors.push(`Row ${rowIndex + 1}: Invalid phone format`);
     }
     
